@@ -29,7 +29,7 @@ const createCard = (imgId, title, artist, url, dateStart, dateEnd) => {
 	: yearsWorked.innerHTML = yearPhrase + `${dateEnd - dateStart}`;
 
 	const infoTwo = document.createElement('p');
-	infoTwo.innerHTML = `Artist: ${artist}`;
+	infoTwo.innerHTML = `Creator: ${artist}`;
 
 	container.appendChild(card);
 	card.appendChild(imgContainer);
