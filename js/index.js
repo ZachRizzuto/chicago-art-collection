@@ -7,7 +7,7 @@ const artData = fetch('https://api.artic.edu/api/v1/artworks?fields=title,artist
 	.then(data => data)
 	.catch((err) => console.log(err));
 
-const createCard = (imgId, title, artist, url) => {
+const createCard = (imgId, title, artist, url, dateStart, dateEnd) => {
 	const urlTail = '/full/843,/0/default.jpg';
 
 	const card = document.createElement('div');
@@ -22,6 +22,12 @@ const createCard = (imgId, title, artist, url) => {
 	const infoOne = document.createElement('p');
 	infoOne.innerHTML = `Title: ${title}`;
 
+	const yearsWorked = document.createElement('p');
+	let yearPhrase = `Years Worked On: `;
+	dateStart - dateEnd === 0 
+	? yearsWorked.innerHTML = yearPhrase + '1' 
+	: yearsWorked.innerHTML = yearPhrase + `${dateEnd - dateStart}`;
+
 	const infoTwo = document.createElement('p');
 	infoTwo.innerHTML = `Artist: ${artist}`;
 
@@ -29,6 +35,7 @@ const createCard = (imgId, title, artist, url) => {
 	card.appendChild(imgContainer);
 	imgContainer.appendChild(img);
 	card.appendChild(infoOne);
+	card.appendChild(yearsWorked);
 	card.appendChild(infoTwo);
 }
 
@@ -69,7 +76,13 @@ const showYearsWorked = async () => {
 	let yearCounter = document.querySelector('.years-worked');
 	let totalYears = 0;
 	await loadedArt.data.forEach((piece) => {
-		totalYears += (piece.date_end - piece.date_start);
+		let start = piece.date_start;
+		let end = piece.date_end;
+		if (end - start === 0) {
+			totalYears += 1;
+		} else {
+			totalYears += (piece.date_end - piece.date_start);
+		}
 	})
 	yearCounter.innerHTML = `Total Years Worked: ${totalYears} years`;
 }
@@ -80,7 +93,7 @@ const fromDataToHTML = async () => {
 	displayLoading();
 
 	await loadedArt.data.forEach((piece) => {
-		createCard(piece.image_id, piece.title, piece.artist_title, 'https://www.artic.edu/iiif/2/');
+		createCard(piece.image_id, piece.title, piece.artist_title, 'https://www.artic.edu/iiif/2/', piece.date_start, piece.date_end);
 	})
 
 	stopLoading();
