@@ -25,6 +25,17 @@
 	font-size: 1.3rem;
 }
 
+.years-worked-container {
+	display: flex;
+	justify-content: center;
+}
+
+.years-worked {
+	font-size: 1.8rem;
+	text-align: center;
+	border-bottom: 1px solid #ffff;
+}
+
 .artwork-container {
 	max-width: 1140px;
 	width: 100%;
