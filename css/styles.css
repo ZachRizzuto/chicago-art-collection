@@ -81,6 +81,22 @@
 .modal-img {
 	width: 100%;
 	height: 80vh;
-	object-fit: contain;
-	pointer-events: none;
+  object-fit: cover;
+}
+
+.page-bar {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 3rem;
+	background-color: var(--bg-light);
+	padding: 1rem;
+}
+
+.page-bar ul {
+	display: flex;
+	list-style: none;
+	justify-content: center;
+	gap: 15px;
+	font-size: 2rem;
 }
