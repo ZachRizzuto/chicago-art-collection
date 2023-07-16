@@ -1,9 +1,16 @@
 const container = document.getElementById('content');
 const open = '[data-open]';
+const loader = document.getElementById('loading');
 
 const artData = fetch('https://api.artic.edu/api/v1/artworks?page=2&limit=12')
-	.then(res => res.json())
-	.then(data => data)
+	.then(res => {
+		displayLoading();
+		return res.json();
+	})
+	.then(data => {
+		stopLoading();
+		return data;
+	})
 	.catch((err) => console.log(err));
 
 const createCard = (imgId, title, artist, url) => {
@@ -53,6 +60,14 @@ const createModal = (imgUrl) => {
 
 const closeModal = (modal) => {
 	modal.remove();
+}
+
+const displayLoading = () => {
+	loader.classList.add('visible');
+}
+
+const stopLoading = () => {
+	loader.classList.remove('visible');
 }
 
 const fromDataToCard = async () => {

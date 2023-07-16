@@ -1,6 +1,10 @@
 
 @media (max-width: 768px) {
 	.topbar nav { display: none; }
-
 	.topbar i { display: block; }
+	.artwork-container { column-count: 2; }
+}
+
+@media (max-width: 600px ) {
+	.artwork-container { column-count: 1; }
 }

@@ -39,3 +39,4 @@ $RECYCLE.BIN/
 
 # API Keys
 .env*
+'https://api.artic.edu/api/v1/artworks?page=2&limit=12'
