@@ -1,0 +1,31 @@
+:root {
+	--bg-base: rgb(67, 67, 67);
+	--bg-light: #808080;
+	--font-base: #ffffff;
+}
+
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	transition: all .3s;
+}
+
+body { background-color: var(--bg-base); }
+
+a { text-decoration: none; }
+a:visited { color: var(--font-base) }
+
+button {
+	background: none; 
+	border: none;
+	color: var(--font-base);
+}
+
+p { pointer-events: none; }
+
+.page-container { color: var(--font-base); }
+
+.visible { display: block; }
+.hidden { display: none; }
