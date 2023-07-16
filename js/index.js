@@ -3,14 +3,8 @@ const open = '[data-open]';
 const loader = document.getElementById('loading');
 
 const artData = fetch('https://api.artic.edu/api/v1/artworks?fields=title,artist_title,image_id,date_start,date_end')
-	.then(res => {
-		displayLoading();
-		return res.json();
-	})
-	.then(data => {
-		stopLoading();
-		return data;
-	})
+	.then(res => res.json())
+	.then(data => data)
 	.catch((err) => console.log(err));
 
 const createCard = (imgId, title, artist, url) => {
@@ -73,10 +67,13 @@ const stopLoading = () => {
 
 const fromDataToCard = async () => {
 	let loadedArt = await artData;
-
+	load = setTimeout(console.log('Loading'), 1000);
+	displayLoading();
+	await load;
 	await loadedArt.data.forEach((piece) => {
 		createCard(piece.image_id, piece.title, piece.artist_title, 'https://www.artic.edu/iiif/2/');
 	})
+	stopLoading();
 	console.log('Cards done.')
 
 	container.addEventListener('click', function(e) {
