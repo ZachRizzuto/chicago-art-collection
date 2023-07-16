@@ -64,26 +64,37 @@ const stopLoading = () => {
 	loader.classList.remove('visible');
 }
 
-const fromDataToCard = async () => {
+const showYearsWorked = async () => {
 	let loadedArt = await artData;
-	load = setTimeout(console.log('Loading'), 1000);
+	let yearCounter = document.querySelector('.years-worked');
+	let totalYears = 0;
+	await loadedArt.data.forEach((piece) => {
+		totalYears += (piece.date_end - piece.date_start);
+	})
+	yearCounter.innerHTML = `Total Years Worked: ${totalYears} years`;
+}
+
+const fromDataToHTML = async () => {
+	let loadedArt = await artData;
+
 	displayLoading();
-	await load;
+
 	await loadedArt.data.forEach((piece) => {
 		createCard(piece.image_id, piece.title, piece.artist_title, 'https://www.artic.edu/iiif/2/');
 	})
+
 	stopLoading();
 	console.log('Cards done.')
 
-	container.addEventListener('click', function(e) {
-		let elm = e.target;
-		elm.tagName === 'IMG' ? createModal(e.target.src) : null;
-	})
+	showYearsWorked();
 }
 
+container.addEventListener('click', function(e) {
+	let elm = e.target;
+	elm.tagName === 'IMG' ? createModal(e.target.src) : null;
+})
 
-
-fromDataToCard();
+fromDataToHTML();
 
 
 
