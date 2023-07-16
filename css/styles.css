@@ -78,3 +78,21 @@
 	height: 80vh;
 	object-fit: cover;
 }
+
+.page-bar {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 3rem;
+	background-color: var(--bg-light);
+	padding: 1rem;
+}
+
+.page-bar ul {
+	display: flex;
+	list-style: none;
+	justify-content: center;
+	gap: 15px;
+	font-size: 2rem;
+	color: 
+}
