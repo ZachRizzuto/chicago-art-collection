@@ -36,6 +36,7 @@ const createModal = (imgUrl) => {
 	modalWrap.classList.add('modal-wrap');
 	modalWrap.dataset.toggle = 'open';
 	modalWrap.addEventListener('click', (e) => {
+		console.log(e.target);
 		closeModal(e.target);
 	});
 
