@@ -63,6 +63,7 @@
 	border: 2px solid white;
 	object-fit: cover;
 	cursor: pointer;
+	margin-bottom: .5rem;
 }
 
 .modal-wrap {

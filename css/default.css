@@ -26,7 +26,10 @@ button {
 	color: var(--font-base);
 }
 
-p { pointer-events: none; }
+p { 
+	pointer-events: none; 
+	margin-bottom: .5rem;
+}
 
 .page-container { color: var(--font-base); }
 
