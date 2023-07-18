@@ -17,7 +17,9 @@ const createCard = (imgId, title, artist, url, dateStart, dateEnd) => {
 	imgContainer.classList.add('img-container');
 
 	const img = document.createElement('img');
-	img.src = url + imgId + urlTail;
+	imgId === null 
+	? img.src = 'https://cdn.pixabay.com/photo/2016/06/03/08/18/oops-1432954_960_720.png'
+	: img.src = url + imgId + urlTail;
 
 	const infoOne = document.createElement('p');
 	infoOne.innerHTML = `Title: ${title}`;
