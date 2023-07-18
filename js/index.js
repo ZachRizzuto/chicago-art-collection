@@ -7,37 +7,51 @@ const artData = fetch('https://api.artic.edu/api/v1/artworks?fields=title,artist
 	.then(data => data)
 	.catch((err) => console.log(err));
 
-const createCard = (imgId, title, artist, url, dateStart, dateEnd) => {
-	const urlTail = '/full/843,/0/default.jpg';
-
-	const card = document.createElement('div');
-	card.classList.add('art-card');
-
-	const imgContainer = document.createElement('div');
-	imgContainer.classList.add('img-container');
-
-	const img = document.createElement('img');
-	img.src = url + imgId + urlTail;
-
-	const infoOne = document.createElement('p');
-	infoOne.innerHTML = `Title: ${title}`;
-
-	const yearsWorked = document.createElement('p');
-	let yearPhrase = `Years Worked On: `;
-	dateStart - dateEnd === 0 
-	? yearsWorked.innerHTML = yearPhrase + '1' 
-	: yearsWorked.innerHTML = yearPhrase + `${dateEnd - dateStart}`;
-
-	const infoTwo = document.createElement('p');
-	infoTwo.innerHTML = `Creator: ${artist}`;
-
-	container.appendChild(card);
-	card.appendChild(imgContainer);
-	imgContainer.appendChild(img);
-	card.appendChild(infoOne);
-	card.appendChild(yearsWorked);
-	card.appendChild(infoTwo);
-}
+	const createCard = (imgId, title, artist, url, dateStart, dateEnd) => {
+		const urlTail = '/full/843,/0/default.jpg';
+	
+		const card = document.createElement('div');
+		card.classList.add('art-card');
+		card.dataset.favorite = 'no';
+	
+		const favBtn = document.createElement('button');
+		favBtn.classList.add('favBtn');
+	
+		const btnIcon = document.createElement('i');
+		btnIcon.classList.add('fa-regular');
+		btnIcon.classList.add('fa-plus');
+	
+		const imgContainer = document.createElement('div');
+		imgContainer.classList.add('img-container');
+	
+		const img = document.createElement('img');
+		imgId === null 
+		? img.src = 'https://cdn.pixabay.com/photo/2016/06/03/08/18/oops-1432954_960_720.png'
+		: img.src = url + imgId + urlTail;
+	
+		const infoOne = document.createElement('p');
+		infoOne.innerHTML = `Title: ${title}`;
+	
+		const yearsWorked = document.createElement('p');
+		let yearPhrase = `Years Worked On: `;
+		dateStart - dateEnd === 0 
+		? yearsWorked.innerHTML = yearPhrase + '1' 
+		: yearsWorked.innerHTML = yearPhrase + `${dateEnd - dateStart}`;
+	
+		const infoTwo = document.createElement('p');
+		artist === null 
+		? infoTwo.innerHTML = `Creator: Unknown`
+		: infoTwo.innerHTML = `Creator: ${artist}`;
+	
+		container.appendChild(card);
+		card.appendChild(favBtn);
+		favBtn.appendChild(btnIcon);
+		card.appendChild(imgContainer);
+		imgContainer.appendChild(img);
+		card.appendChild(infoOne);
+		card.appendChild(yearsWorked);
+		card.appendChild(infoTwo);
+	}
 
 const createModal = (imgUrl) => {
 	const modalWrap = document.createElement('div');
@@ -97,15 +111,30 @@ const fromDataToHTML = async () => {
 	})
 
 	stopLoading();
-	console.log('Cards done.')
+	console.log('Cards done.');
 
 	showYearsWorked();
+	showFavs();
 }
 
-container.addEventListener('click', function(e) {
+container.addEventListener('click', (e) => {
 	let elm = e.target;
 	elm.tagName === 'IMG' ? createModal(e.target.src) : null;
 })
+
+const showFavs = () => {
+	let btn = document.getElementById('addFav')
+	let favBtns = document.querySelectorAll('.favBtn');
+	btn.addEventListener('click', () => {
+		if (Array.from(favBtns[0].classList).includes('scale-one')) {
+			btn.innerHTML = 'Add Favorites';
+			favBtns.forEach((b) => b.classList.remove('scale-one'));
+		} else {
+			btn.innerHTML = 'Done';
+			favBtns.forEach((b) => b.classList.add('scale-one'));
+		}
+	})
+}
 
 fromDataToHTML();
 

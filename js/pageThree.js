@@ -12,6 +12,14 @@ const createCard = (imgId, title, artist, url, dateStart, dateEnd) => {
 
 	const card = document.createElement('div');
 	card.classList.add('art-card');
+	card.dataset.favorite = 'no';
+
+	const favBtn = document.createElement('button');
+	favBtn.classList.add('favBtn');
+
+	const btnIcon = document.createElement('i');
+	btnIcon.classList.add('fa-regular');
+	btnIcon.classList.add('fa-plus');
 
 	const imgContainer = document.createElement('div');
 	imgContainer.classList.add('img-container');
@@ -36,6 +44,8 @@ const createCard = (imgId, title, artist, url, dateStart, dateEnd) => {
 	: infoTwo.innerHTML = `Creator: ${artist}`;
 
 	container.appendChild(card);
+	card.appendChild(favBtn);
+	favBtn.appendChild(btnIcon);
 	card.appendChild(imgContainer);
 	imgContainer.appendChild(img);
 	card.appendChild(infoOne);
@@ -101,14 +111,29 @@ const fromDataToHTML = async () => {
 	})
 
 	stopLoading();
-	console.log('Cards done.')
+	console.log('Cards done.');
 
 	showYearsWorked();
+	showFavs();
 }
 
-container.addEventListener('click', function(e) {
+container.addEventListener('click', (e) => {
 	let elm = e.target;
 	elm.tagName === 'IMG' ? createModal(e.target.src) : null;
 })
+
+const showFavs = () => {
+	let btn = document.getElementById('addFav')
+	let favBtns = document.querySelectorAll('.favBtn');
+	btn.addEventListener('click', () => {
+		if (Array.from(favBtns[0].classList).includes('scale-one')) {
+			btn.innerHTML = 'Add Favorites';
+			favBtns.forEach((b) => b.classList.remove('scale-one'));
+		} else {
+			btn.innerHTML = 'Done';
+			favBtns.forEach((b) => b.classList.add('scale-one'));
+		}
+	})
+}
 
 fromDataToHTML();
