@@ -145,7 +145,8 @@
 }
 
 #addFav,
-#clearFav {
+#clearFav,
+#sort {
 	display: flex;
 	align-items: center;
 	justify-content: center;

@@ -46,6 +46,7 @@ const createCard = (imgId, title, artist, url, dateStart, dateEnd, artId) => {
 		: yearsWorked.innerText = yearPhrase + `${dateEnd - dateStart}`;
 	
 		const infoTwo = document.createElement('p');
+		infoTwo.classList.add('artist-name');
 		artist === null 
 		? infoTwo.innerText = `Creator: Unknown`
 		: infoTwo.innerText = `Creator: ${artist}`;
@@ -75,6 +76,43 @@ const getCards = async () => {
 			);
 		}
 	})
+}
+
+const sortCards = async () => {
+	let loadedArt = await artData;
+	let cards = document.querySelectorAll('.art-card')
+	let titles = [];
+
+	cards.forEach((c) => c.remove());
+	
+	loadedArt.data.forEach((art) => {
+		titles.push(art.title);
+	})
+	titles.sort();
+	
+	titles.forEach((t) => {
+		loadedArt.data.forEach((art) => {
+			if (t === art.title) {
+				if (
+					localStorage.getItem('favorites') === null 
+				|| !JSON.parse(localStorage.getItem('favorites')).includes(art.id)
+				) {
+					createCard(
+					art.image_id, 
+					art.title, 
+					art.artist_title, 
+					'https://www.artic.edu/iiif/2/', 
+					art.date_start, 
+					art.date_end, 
+					art.id
+					)
+					console.log('hit');
+				}
+			}
+		})
+	})
+	showFavs();
+	addFav();
 }
 
 const createModal = (imgUrl) => {
@@ -128,6 +166,8 @@ container.addEventListener('click', (e) => {
 	let elm = e.target;
 	elm.tagName === 'IMG' ? createModal(e.target.src) : null;
 })
+
+document.getElementById('sort').addEventListener('click', sortCards);
 
 const addFav = async () => {
 	let loadedArt = await artData;

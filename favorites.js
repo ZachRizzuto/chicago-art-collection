@@ -75,6 +75,40 @@ const getCards = async () => {
 	})
 }
 
+const sortCards = async () => {
+	let loadedArt = await artData;
+	let cards = document.querySelectorAll('.art-card')
+	let titles = [];
+
+	cards.forEach((c) => c.remove());
+	
+	loadedArt.data.forEach((art) => {
+		titles.push(art.title);
+	})
+	titles.sort();
+	
+	titles.forEach((t) => {
+		loadedArt.data.forEach((art) => {
+			if (t === art.title) {
+				if (JSON.parse(localStorage.getItem('favorites').includes(art.id))) {
+					createCard(
+					art.image_id, 
+					art.title, 
+					art.artist_title, 
+					'https://www.artic.edu/iiif/2/', 
+					art.date_start, 
+					art.date_end, 
+					art.id
+					)
+					console.log('hit');
+				}
+			}
+		})
+	})
+	showFavs();
+	addFav();
+}
+
 const showFavs = () => {
 	let btn = document.getElementById('addFav')
 	let favBtns = document.querySelectorAll('.favBtn');
@@ -170,6 +204,7 @@ container.addEventListener('click', (e) => {
 const clearBtn = document.getElementById('clearFav');
 
 clearBtn.addEventListener('click', clearFav);
+document.getElementById('sort').addEventListener('click', sortCards);
 
 fromDataToHTML();
 
