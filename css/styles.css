@@ -55,6 +55,7 @@
 	border-radius: 2rem;
 	display: inline-block;
 	margin-bottom: 1rem;
+	position: relative;
 }
 
 .img-container img {
@@ -110,6 +111,46 @@
 	justify-content: center;
 	gap: 15px;
 	font-size: 2rem;
+}
+
+.favBtn {
+	height: 50px;
+	width: 50px;
+	background-color: var(--bg-light);
+	position: absolute;
+	right: 31px;
+	top: 0;
+	border: 2px solid white;
+	border-bottom-left-radius: 15px;
+	border-bottom-right-radius: 15px;
+	cursor: pointer;
+	box-shadow: 0px 8px 10px var(--bg-base);
+	transform: scaleY(0);
+	top: -25px;
+}
+
+.favBtn i { pointer-events: none; }
+
+.favBtn:hover { background-color: var(--bg-base); }
+
+.scale-one { 
+	top: 0;
+	transform: scaleY(1); 
+}
+
+#addFav {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 150px;
+	height: 2rem;
+	font-size: 1.5rem;
+	background-color: var(--bg-light);
+	margin-left: auto;
+	margin-right: 2rem;
+	border-radius: 10px;
+	cursor: pointer;
+	user-select: none;
 }
 
 #loading {
