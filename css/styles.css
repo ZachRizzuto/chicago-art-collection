@@ -129,6 +129,8 @@
 	top: -25px;
 }
 
+.favBtn i { pointer-events: none; }
+
 .favBtn:hover { background-color: var(--bg-base); }
 
 .scale-one { 
