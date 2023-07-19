@@ -1,13 +1,16 @@
-const favs = [];
-
+let favs;
 const container = document.getElementById('content');
 const open = '[data-open]';
 const loader = document.getElementById('loading');
 
-const artData = fetch('https://api.artic.edu/api/v1/artworks?fields=title,artist_title,image_id,date_start,date_end,id')
+const artData = fetch('https://api.artic.edu/api/v1/artworks?page=1&limit=12')
 	.then(res => res.json())
 	.then(data => data)
 	.catch((err) => console.log(err));
+
+localStorage.getItem('favorites') === null
+? favs = []
+: favs = JSON.parse(localStorage.getItem('favorites'));
 
 const createCard = (imgId, title, artist, url, dateStart, dateEnd, artId) => {
 		const urlTail = '/full/843,/0/default.jpg';
@@ -33,32 +36,45 @@ const createCard = (imgId, title, artist, url, dateStart, dateEnd, artId) => {
 		: img.src = url + imgId + urlTail;
 	
 		const infoOne = document.createElement('p');
-		infoOne.innerHTML = `Title: ${title}`;
+		infoOne.innerText = `Title: ${title}`;
 	
 		const yearsWorked = document.createElement('p');
+		yearsWorked.classList.add('yrs-wrkd');
 		let yearPhrase = `Years Worked On: `;
 		dateStart - dateEnd === 0 
-		? yearsWorked.innerHTML = yearPhrase + '1' 
-		: yearsWorked.innerHTML = yearPhrase + `${dateEnd - dateStart}`;
+		? yearsWorked.innerText = yearPhrase + '1' 
+		: yearsWorked.innerText = yearPhrase + `${dateEnd - dateStart}`;
 	
 		const infoTwo = document.createElement('p');
 		artist === null 
-		? infoTwo.innerHTML = `Creator: Unknown`
-		: infoTwo.innerHTML = `Creator: ${artist}`;
+		? infoTwo.innerText = `Creator: Unknown`
+		: infoTwo.innerText = `Creator: ${artist}`;
 
 		const infoThree = document.createElement('p');
-		infoThree.innerHTML = `Artwork Id: ${artId}`;
+		infoThree.innerText = `Artwork Id: ${artId}`;
 		infoThree.classList.add('idInfo');
 	
-		container.appendChild(card);
-		card.appendChild(favBtn);
-		favBtn.appendChild(btnIcon);
-		card.appendChild(imgContainer);
-		imgContainer.appendChild(img);
-		card.appendChild(infoOne);
-		card.appendChild(yearsWorked);
-		card.appendChild(infoTwo);
-		card.appendChild(infoThree);
+		container.append(card);
+		card.append(favBtn, imgContainer, infoOne, yearsWorked, infoTwo, infoThree);
+		favBtn.append(btnIcon);
+		imgContainer.append(img);
+}
+
+const getCards = async () => {
+	let loadedArt = await artData;
+	loadedArt.data.forEach((piece) => {
+		if (localStorage.getItem('favorites') === null || !JSON.parse(localStorage.getItem('favorites')).includes(piece.id)) {
+			createCard(
+				piece.image_id, 
+				piece.title, 
+				piece.artist_title, 
+				'https://www.artic.edu/iiif/2/', 
+				piece.date_start, 
+				piece.date_end, 
+				piece.id
+			);
+		}
+	})
 }
 
 const createModal = (imgUrl) => {
@@ -86,41 +102,23 @@ const closeModal = (modal) => {
 }
 
 const displayLoading = () => {
-	loader.classList.add('visible');
+	loader.classList.toggle('visible');
 }
 
-const stopLoading = () => {
-	loader.classList.remove('visible');
-}
-
-const showYearsWorked = async () => {
-	let loadedArt = await artData;
+const showYearsWorked = () => {
 	let yearCounter = document.querySelector('.years-worked');
 	let totalYears = 0;
-	await loadedArt.data.forEach((piece) => {
-		let start = piece.date_start;
-		let end = piece.date_end;
-		if (end - start === 0) {
-			totalYears += 1;
-		} else {
-			totalYears += (piece.date_end - piece.date_start);
-		}
+	let cards = Array.from(document.querySelectorAll('.yrs-wrkd'));
+	cards.forEach((c) => {
+		let yearNum = c.textContent.match(/\d/g).join("");
+		totalYears += Number(yearNum);
 	})
-	yearCounter.innerHTML = `Total Years Worked: ${totalYears} years`;
+	yearCounter.innerText = `Total Years Worked: ${totalYears} years`;
 }
 
 const fromDataToHTML = async () => {
-	let loadedArt = await artData;
-
-	displayLoading();
-
-	await loadedArt.data.forEach((piece) => {
-		createCard(piece.image_id, piece.title, piece.artist_title, 'https://www.artic.edu/iiif/2/', piece.date_start, piece.date_end, piece.id);
-	})
-
-	stopLoading();
+	await getCards();
 	console.log('Cards done.');
-
 	showYearsWorked();
 	showFavs();
 	addFav();
@@ -136,16 +134,20 @@ const addFav = async () => {
 	container.addEventListener('click', function (e) {
 		let elm = e.target;
 		if (elm.dataset.addfav === 'true') {
+			elm.dataset.addfav = 'false';
 			let elmparent = e.target.parentElement;
 			let id = elmparent.querySelector('.idInfo').textContent.match(/\d/g).join("");
 			let piece = loadedArt.data;
-			for (i of piece) {
-				if (i.id == id && !favs.includes(i)) {
-					favs.push(i);
-					console.log(favs);
+			for (let i of piece) {
+				if (i.id == id) {
+					favs.push(i.id);
 				}
 			}
+			elmparent.remove();
+			showYearsWorked();
 		}
+		let store = JSON.stringify(favs);
+		localStorage.setItem('favorites', store);
 	})
 }
 
