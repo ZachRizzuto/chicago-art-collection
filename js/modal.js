@@ -5,8 +5,8 @@ export const createModal = (imgUrl) => {
 	modalWrap.classList.add('modal-wrap');
 	modalWrap.classList.add('visible');
 	modalWrap.dataset.toggle = 'open';
-	modalWrap.addEventListener('click', (e) => {
-		closeModal(e.target);
+	modalWrap.addEventListener('click', function () {
+		this.remove();
 	});
 
 	const modalImgWrap = document.createElement('div');
