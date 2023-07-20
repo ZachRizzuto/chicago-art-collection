@@ -3,6 +3,18 @@ const artData = fetch('https://api.artic.edu/api/v1/artworks?page=1&limit=12')
 	.then(data => data)
 	.catch((err) => console.log(err));
 
+export const showYearsWorked = () => {
+	let yearCounter = document.querySelector('.years-worked');
+	let totalYears = 0;
+	let cards = Array.from(document.querySelectorAll('.yrs-wrkd'));
+	cards.forEach((c) => {
+		let yearNum = c.textContent.match(/\d/g).join("");
+		totalYears += Number(yearNum);
+	})
+	yearCounter.innerText = `Total Years Worked: ${totalYears} years`;
+	return totalYears;
+}
+
 export function showFavs() {
 	let favBtns = document.querySelectorAll('.favBtn');
 	if (Array.from(favBtns[0].classList).includes('scale-one')) {
@@ -50,6 +62,7 @@ export const addFav = async (card, arr) => {
 		}
 		elmparent.remove();
 	}
+	showYearsWorked();
 	let store = JSON.stringify(arr);
 	localStorage.setItem('favorites', store);
 }
