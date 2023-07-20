@@ -90,7 +90,7 @@ export const getCardsFavorites = async (icon) => {
 	})
 }
 
-export const sortCards = async (func, icon) => {
+export const sortCardsA = async (func, icon) => {
 	let loadedArt = await artData;
 	let cards = document.querySelectorAll('.art-card');
 	let titles = Array.from(document.querySelectorAll('.titleInfo'));
@@ -103,6 +103,41 @@ export const sortCards = async (func, icon) => {
 		titlesArray.push([title, id]);
 	}
 	titlesArray.sort();
+
+	cards.forEach((c) => c.remove());
+	
+	titlesArray.forEach((t) => {
+		loadedArt.data.forEach((art) => {
+			if (t[1] == art.id) {
+				func(
+					art.image_id,
+					art.title,
+					art.artist_title,
+					'https://www.artic.edu/iiif/2/', 
+					art.date_start,
+					art.date_end,
+					art.id,
+					icon
+				);
+			}
+		})
+	})
+}
+
+export const sortCardsZ = async (func, icon) => {
+	let loadedArt = await artData;
+	let cards = document.querySelectorAll('.art-card');
+	let titles = Array.from(document.querySelectorAll('.titleInfo'));
+	let ids = Array.from(document.querySelectorAll('.idInfo'));
+	let titlesArray = [];
+
+	for(let i = 0; i < titles.length; i++) {
+		let id = ids[i].textContent.slice(12);
+		let title = titles[i].textContent.slice(7);
+		titlesArray.push([title, id]);
+	}
+	titlesArray.sort();
+	titlesArray.reverse();
 
 	cards.forEach((c) => c.remove());
 	

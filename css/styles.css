@@ -156,7 +156,8 @@
 
 #addFav,
 #clearFav,
-#sort {
+#sort-a,
+#sort-z {
 	display: flex;
 	align-items: center;
 	justify-content: center;

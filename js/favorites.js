@@ -35,7 +35,8 @@ clearBtn.addEventListener('click', () => {
 	fav.showYearsWorked();
 });
 
-document.getElementById('sort').addEventListener('click', () => card.sortCards(card.createCard, 'minus'));
+document.getElementById('sort-a').addEventListener('click', () => card.sortCardsA(card.createCard, 'minus'));
+document.getElementById('sort-z').addEventListener('click', () => card.sortCardsZ(card.createCard, 'minus'));
 
 const favShowBtn = document.getElementById('addFav');
 favShowBtn.addEventListener('click', fav.showFavs)

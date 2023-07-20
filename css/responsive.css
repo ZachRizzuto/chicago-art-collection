@@ -11,7 +11,8 @@
 	}
 	#addFav,
 	#clearFav,
-	#sort { margin-right: 0; }
+	#sort-a,
+	#sort-z { margin-right: 0; }
 }
 
 @media (max-width: 600px ) {
