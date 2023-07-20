@@ -3,6 +3,15 @@
 	.topbar nav { display: none; }
 	.topbar i { display: block; }
 	.artwork-container { column-count: 2; }
+
+	.favBtns { 
+		justify-content: center; 
+		gap: 20px;
+		flex-wrap: wrap;
+	}
+	#addFav,
+	#clearFav,
+	#sort { margin-right: 0; }
 }
 
 @media (max-width: 600px ) {

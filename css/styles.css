@@ -73,7 +73,7 @@
 	bottom: 0;
 	left: 0;
 	right: 0;
-	background-color: #ffffffdd;
+	background-color: #ffff;
 	height: 100vh;
 	width: 100vw;
 	display: flex;
@@ -81,6 +81,15 @@
 	align-items: center;
 	cursor: pointer;
 	z-index: 10;
+}
+
+.topbar .modal-wrap {
+	background-color: var(--bg-light);
+	height: 11vh;
+	border-bottom: 2px solid #ffff;
+	border-bottom-left-radius: 85%;
+	border-bottom-right-radius: 85%;
+	top: -120px;
 }
 
 .modal-img-wrap {
@@ -126,7 +135,6 @@
 	cursor: pointer;
 	box-shadow: 0px 8px 10px var(--bg-base);
 	transform: scaleY(0);
-	top: -25px;
 }
 
 .favBtn i { pointer-events: none; }
@@ -161,21 +169,15 @@
 	user-select: none;
 }
 
-#loading {
-	width: 7px;
-	height: 44px;
-	position: absolute;
-	right: 0;
-	left: 0;
-	top: 60px;
-	background-color: var(--bg-light);
-	margin: auto;
-	visibility: hidden;
-	animation: spin 1s infinite linear;
+#mobile-menu-btn {
+	position: relative;
+	z-index: 20;
 }
 
-#loading.visible {
-	visibility: visible;
+.visible { display: block; }
+.topbar .modal-wrap.visible { 
+	display: flex; 
+	top: 0;
 }
 
 @keyframes spin {

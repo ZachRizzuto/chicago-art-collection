@@ -3,6 +3,7 @@ const container = document.getElementById('content');
 export const createModal = (imgUrl) => {
 	const modalWrap = document.createElement('div');
 	modalWrap.classList.add('modal-wrap');
+	modalWrap.classList.add('visible');
 	modalWrap.dataset.toggle = 'open';
 	modalWrap.addEventListener('click', (e) => {
 		closeModal(e.target);
@@ -20,6 +21,14 @@ export const createModal = (imgUrl) => {
 	modalImgWrap.appendChild(modalImg);
 }
 
+export const openModal = (elm) => {
+	if (!Array.from(elm.classList).includes('visible')) {
+		elm.classList.add('visible')
+	} else {
+		closeModal(elm);
+	}
+}
+
 export const closeModal = (modal) => {
-	modal.remove();
+	modal.classList.remove('visible');
 }
