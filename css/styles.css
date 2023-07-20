@@ -84,6 +84,8 @@
 }
 
 .topbar .modal-wrap {
+	position: absolute;
+	display: flex;
 	background-color: var(--bg-light);
 	height: 11vh;
 	border-bottom: 2px solid #ffff;
