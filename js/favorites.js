@@ -35,8 +35,13 @@ clearBtn.addEventListener('click', () => {
 	fav.showYearsWorked();
 });
 
-document.getElementById('sort-a').addEventListener('click', () => card.sortCardsA(card.createCard, 'minus'));
-document.getElementById('sort-z').addEventListener('click', () => card.sortCardsZ(card.createCard, 'minus'));
+document.getElementById('sort-a').addEventListener('click', function() {
+	card.sortCards(card.createCard, 'minus', this.id);
+});
+
+document.getElementById('sort-z').addEventListener('click', function() {
+	card.sortCards(card.createCard, 'minus', this.id);
+});
 
 const favShowBtn = document.getElementById('addFav');
 favShowBtn.addEventListener('click', fav.showFavs)

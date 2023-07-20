@@ -28,8 +28,13 @@ container.addEventListener('click', (e) => {
 	fav.addFav(card, favs);
 })
 
-document.getElementById('sort-a').addEventListener('click', () => card.sortCardsA(card.createCard, 'plus'));
-document.getElementById('sort-z').addEventListener('click', () => card.sortCardsZ(card.createCard, 'plus'));
+document.getElementById('sort-a').addEventListener('click', function() {
+	card.sortCards(card.createCard, 'plus', this.id);
+});
+
+document.getElementById('sort-z').addEventListener('click', function() {
+	card.sortCards(card.createCard, 'plus', this.id);
+});
 
 const favShowBtn = document.getElementById('addFav');
 favShowBtn.addEventListener('click', fav.showFavs);
