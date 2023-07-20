@@ -41,7 +41,11 @@ container.addEventListener('click', (e) => {
 })
 
 const clearBtn = document.getElementById('clearFav');
-clearBtn.addEventListener('click', fav.clearFav);
+clearBtn.addEventListener('click', () => {
+	fav.clearFav();
+	showYearsWorked();
+});
+
 document.getElementById('sort').addEventListener('click', () => card.sortCards(card.createCard, 'minus'));
 
 const favShowBtn = document.getElementById('addFav');
