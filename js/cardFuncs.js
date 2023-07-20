@@ -76,7 +76,6 @@ export const getCardsFavorites = async (icon) => {
 	let loadedArt = await artData;
 	loadedArt.data.forEach((piece) => {
 		if (JSON.parse(localStorage.getItem('favorites')).includes(piece.id)) {
-			console.log('hit');
 			createCard(
 				piece.image_id, 
 				piece.title, 

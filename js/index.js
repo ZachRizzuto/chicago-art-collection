@@ -2,30 +2,20 @@ import * as modal from "./modal.js"
 import * as fav from "./favFuncs.js"
 import * as card from "./cardFuncs.js"
 
-let favs;
+let favs = [];
 const container = document.getElementById('content');
 
 const setStorage = () => {
 	localStorage.getItem('favorites') === null
-	? favs = []
+	? localStorage.setItem('favorites', JSON.stringify(favs))
 	: favs = JSON.parse(localStorage.getItem('favorites'));
 }
 
-const showYearsWorked = () => {
-	let yearCounter = document.querySelector('.years-worked');
-	let totalYears = 0;
-	let cards = Array.from(document.querySelectorAll('.yrs-wrkd'));
-	cards.forEach((c) => {
-		let yearNum = c.textContent.match(/\d/g).join("");
-		totalYears += Number(yearNum);
-	})
-	yearCounter.innerText = `Total Years Worked: ${totalYears} years`;
-}
-
 const fromDataToHTML = async () => {
+	setStorage();
 	await card.getCardsCollection('plus');
 	console.log('Cards done.');
-	showYearsWorked();
+	fav.showYearsWorked();
 }
 
 container.addEventListener('click', (e) => {
@@ -36,7 +26,6 @@ container.addEventListener('click', (e) => {
 container.addEventListener('click', (e) => {
 	let card = e.target;
 	fav.addFav(card, favs);
-	showYearsWorked();
 })
 
 document.getElementById('sort').addEventListener('click', () => card.sortCards(card.createCard, 'plus'));
@@ -53,7 +42,7 @@ menuBtn.addEventListener('click', () => {
 	modal.openModal(menu);
 })
 
-setStorage();
+
 fromDataToHTML();
 
 
