@@ -51,6 +51,15 @@ document.getElementById('sort').addEventListener('click', () => card.sortCards(c
 const favShowBtn = document.getElementById('addFav');
 favShowBtn.addEventListener('click', fav.showFavs)
 
+const menuBtn = document.getElementById('mobile-menu-btn');
+menuBtn.addEventListener('click', () => {
+	let icon = Array.from(menuBtn.children)[0];
+	icon.classList.toggle('fa-bars')
+	icon.classList.toggle('fa-xmark')
+	let menu = document.getElementById('modal-menu');
+	modal.openModal(menu);
+})
+
 fromDataToHTML();
 
 
